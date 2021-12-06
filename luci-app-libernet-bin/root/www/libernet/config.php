@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <?php
-        $title = "Configuration";
+        $title = "Konfigurasi";
         include("head.php");
     ?>
 </head>
@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="text-center">
-                            <h3><i class="fa fa-gears"></i> Configuration</h3>
+                            <h3><i class="fa fa-gears"></i> Konfigurasi</h3>
                         </div>
                         <hr>
                         <form @submit.prevent="getConfig">
@@ -47,7 +47,7 @@
                                 <div class="col-lg-4 col-md-3 form-row py-1">
                                     <div class="col d-flex">
                                         <button type="submit" class="btn btn-secondary mr-1">Load</button>
-                                        <button type="button" class="btn btn-danger ml-1" @click="deleteConfig">Delete</button>
+                                        <button type="button" class="btn btn-danger ml-1" @click="deleteConfig">Hapus</button>
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" v-model="config.temp.modes[0].profile.enable_http" checked id="enable-http">
                                         <label class="form-check-label" for="enable-http">
-                                            Enable HTTP Proxy
+                                            Hidupkan HTTP Proxy
                                         </label>
                                     </div>
                                 </div>
@@ -128,10 +128,10 @@
                             <div v-if="config.temp.mode === 1" class="v2ray">
                                 <div v-if="config.temp.modes[1].profile.protocol === 'vmess'" class="form-row pt-lg-2 pb-lg-2 v2ray-vmess">
                                     <div class="col">
-                                        <label>Import VMess from URL</label>
+                                        <label>Impor VMess dari URL</label>
                                         <div class="d-flex">
                                             <input type="text" class="form-control mr-1" placeholder="vmess://xxxxxxxxxxxx" v-model="config.temp.modes[1].import_url">
-                                            <button type="button" class="btn btn-primary ml-1" @click="importV2rayConfig">Import</button>
+                                            <button type="button" class="btn btn-primary ml-1" @click="importV2rayConfig">Impor</button>
                                         </div>
                                     </div>
                                 </div>
@@ -165,7 +165,7 @@
                                         <input type="text" class="form-control" placeholder="900c42c7-a23d-46dd-a1a0-72c37edf8a03" v-model="config.temp.modes[1].profile.server.user.vmess.id" required>
                                     </div>
                                     <div class="col-md-4">
-                                        <label>VMess Security</label>
+                                        <label>Keamanan VMess</label>
                                         <select class="custom-select" v-model="config.temp.modes[1].profile.server.user.vmess.security" required>
                                             <option v-for="security in config.temp.modes[1].protocols[0].securities" :value="security">{{ security }}</option>
                                         </select>
@@ -173,7 +173,7 @@
                                 </div>
                                 <div v-if="config.temp.modes[1].profile.protocol === 'vless'" class="form-row pb-lg-2 v2ray-vless">
                                     <div class="col-md-8">
-                                        <label>VLESS ID</label>
+                                        <label>ID VLESS</label>
                                         <input type="text" class="form-control" placeholder="900c42c7-a23d-46dd-a1a0-72c37edf8a03" v-model="config.temp.modes[1].profile.server.user.vless.id" required>
                                     </div>
                                 </div>
@@ -185,7 +185,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <label>Security</label>
+                                        <label>Keamanan</label>
                                         <select v-if="config.temp.modes[1].profile.network === 'tcp'" class="custom-select" v-model="config.temp.modes[1].profile.security" required>
                                             <option :value="config.temp.modes[1].securities[1].value">{{ config.temp.modes[1].securities[1].name }}</option>
                                         </select>
@@ -247,7 +247,7 @@
                             <div v-if="config.temp.mode === 3" class="trojan pb-lg-2">
                                 <div class="form-row pt-lg-2 pb-lg-2">
                                     <div class="col">
-                                        <label>Import Trojan from URL</label>
+                                        <label>Impor Trojan dari URL</label>
                                         <div class="d-flex">
                                             <input type="text" class="form-control mr-1" placeholder="trojan://xxxxxxxxxxxx" v-model="config.temp.modes[3].import_url">
                                             <button type="button" class="btn btn-primary ml-1" @click="importTrojanConfig">Import</button>
@@ -289,7 +289,7 @@
                             <div v-if="config.temp.mode === 4" class="shadowsocks pb-lg-2">
                                 <div class="form-row pt-lg-2 pb-lg-2">
                                     <div class="col">
-                                        <label>Import Shadowsocks from URL</label>
+                                        <label>Impor Shadowsocks dari URL</label>
                                         <div class="d-flex">
                                             <input type="text" class="form-control mr-1" placeholder="ss://xxxxxxxxxxxx" v-model="config.temp.modes[4].import_url">
                                             <button type="button" class="btn btn-primary ml-1" @click="importShadowsocksConfig">Import</button>
@@ -316,7 +316,7 @@
                                         <input type="text" class="form-control" placeholder="StrongPassword" v-model="config.temp.modes[4].profile.password" required>
                                     </div>
                                     <div class="col-md-4">
-                                        <label>Method</label>
+                                        <label>Metode</label>
                                         <select class="form-control" v-model="config.temp.modes[4].profile.method" required>
                                             <option v-for="method in config.temp.modes[4].methods" :value="method">{{ method }}</option>
                                         </select>
@@ -358,10 +358,10 @@
 
                             <div v-if="config.temp.mode === 5" class="openvpn pb-lg-2">
                                 <div class="form-row pb-lg-2">
-                                    <label>Import OVPN from file</label>
+                                    <label>Impor OVPN dari file</label>
                                     <div class="col-md-12 custom-file">
                                         <input type="file" class="custom-file-input" accept=".ovpn, .conf" id="ovpn-file" @change="importOvpnConfig">
-                                        <label class="custom-file-label" for="ovpn-file">Choose file</label>
+                                        <label class="custom-file-label" for="ovpn-file">Pilih file</label>
                                     </div>
                                 </div>
                                 <div class="form-row pb-lg-2">
@@ -384,7 +384,7 @@
                                     <div class="col-md-12 pl-4">
                                         <input class="form-check-input" type="checkbox" v-model="config.temp.modes[5].profile.ssl" id="enable-ssl">
                                         <label class="form-check-label" for="enable-ssl">
-                                            Enable SSL
+                                            Hidupkan SSL
                                         </label>
                                     </div>
                                 </div>
@@ -397,11 +397,11 @@
                             </div>
 
                             <div class="form-group pb-lg-2 text-center">
-                                <label>Config Name</label>
+                                <label>Nama Config</label>
                                 <input type="text" class="form-control text-center" placeholder="bypass-filter" v-model="config.temp.profile" required>
                             </div>
                             <div class="form-group text-center">
-                                <button type="submit" class="btn btn-primary form-control">Save</button>
+                                <button type="submit" class="btn btn-primary form-control">Simpan</button>
                             </div>
                         </form>
                     </div>

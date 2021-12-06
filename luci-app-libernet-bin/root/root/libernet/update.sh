@@ -11,7 +11,7 @@ REPOSITORY_URL="git://github.com/lutfailham96/libernet.git"
 
 function update_libernet() {
   if [[ ! -d "${LIBERNET_TMP}" ]]; then
-    echo -e "There's no Libernet installer on ~/Downloads directory, please clone it first!"
+    echo -e "Tidak ada installer Libernet di ~/Downloads directory, silahkan kloning dulu!"
     exit 1
   fi
   # change working dir to Libernet installer
@@ -20,17 +20,17 @@ function update_libernet() {
   if git branch > /dev/null 2>&1; then
     update_libernet_cli
   else
-    echo -e "This is not Libernet installer directory, please use installer directory to update Libernet!"
+    echo -e "Ini bukan direktori installer Libernet, silakan gunakan direktori installer untuk memperbarui Libernet!"
     exit 1
   fi
 }
 
 function update_libernet_cli() {
-  echo -e "Updating Libernet ..." \
+  echo -e "Mengupdate Libernet ..." \
     && git fetch origin main \
     && git reset --hard FETCH_HEAD \
     && bash install.sh \
-    && echo -e "\nLibernet successfully updated!"
+    && echo -e "\nLibernet berhasil di update!"
 }
 
 function update_libernet_web() {
@@ -46,7 +46,7 @@ function update_libernet_web() {
     git clone --depth 1 "${REPOSITORY_URL}" "${LIBERNET_TMP}" \
       && cd "${LIBERNET_TMP}" \
       && bash install.sh \
-      && echo -e "\nLibernet successfully updated!"
+      && echo -e "\nLibernet sukses di update!"
   fi
   "${LIBERNET_DIR}/bin/log.sh" -u 2
 }

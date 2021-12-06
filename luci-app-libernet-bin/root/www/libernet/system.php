@@ -42,7 +42,7 @@
                                     </div>
                                 </div>
                                 <div class="col text-center">
-                                    <button type="submit" class="btn btn-primary" :disabled="!status">Change Password</button>
+                                    <button type="submit" class="btn btn-primary" :disabled="!status">Ubah Password</button>
                                 </div>
                             </div>
                         </form>

@@ -19,15 +19,15 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="text-center">
-                            <h3><i class="fa fa-info"></i> About Libernet</h3>
+                            <h3><i class="fa fa-info"></i> Tentang Libernet</h3>
                         </div>
                     </div>
                     <div class="card-body">
                         <div>
                             <p>
-                                Libernet is open source web app for tunneling internet on OpenWRT with ease.
+                                Libernet adalah aplikasi web open source untuk tunneling internet di OpenWRT dengan mudah.
                             </p>
-                            <span>Working features:</span>
+                            <span>Fitur yang bekerja:</span>
                             <ul class="m-2">
                                 <li>SSH with proxy</li>
                                 <li>SSH-SSL</li>
@@ -39,16 +39,16 @@
                                 <li>OpenVPN</li>
                             </ul>
                             <p>
-                                Some features still under development!
+                                Beberapa fitur masih dalam pengembangan!
                             </p>
-                            <p class="text-right m-0"><a href="https://facebook.com/lutfailham">Report bug</a></p>
-                            <p class="text-right m-0">Author: <a href="https://facebook.com/lutfailham"><i>Lutfa Ilham</i></a></p>
+                            <p class="text-right m-0"><a href="https://facebook.com/lutfailham">Laporkan bug</a></p>
+                            <p class="text-right m-0">Author: <a href="https://github.com/cr4r"><i>Github</i></a></p>
                         </div>
                         <div class="text-center">
-                            <p v-if="status === 3" class="text-danger mt-0 mb-1">Update failed!</p>
-                            <p v-else-if="status === 2" class="text-success mt-0 mb-1">Updated to latest version!</p>
-                            <p v-else-if="status === 1" class="text-secondary mt-0 mb-1">Updating ...</p>
-                            <button class="btn btn-primary" :disabled="status === 1" @click="updateLibernet">Update</button>
+                            <p v-if="status === 3" class="text-danger mt-0 mb-1">Update gagal!</p>
+                            <p v-else-if="status === 2" class="text-success mt-0 mb-1">Diperbarui ke versi terbaru!</p>
+                            <p v-else-if="status === 1" class="text-secondary mt-0 mb-1">Memperbarui ...</p>
+                            <button class="btn btn-primary" :disabled="status === 1" @click="updateLibernet">Perbarui</button>
                         </div>
                     </div>
                 </div>

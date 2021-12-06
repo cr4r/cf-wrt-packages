@@ -134,15 +134,15 @@
                 $system_config = file_get_contents($libernet_dir.'/system/config.json');
                 $system_config = json_decode($system_config);
                 exec('export LIBERNET_DIR='.$libernet_dir.' && '.$libernet_dir.'/bin/service.sh -sl');
-                json_response('Libernet service started');
+                json_response('Layanan libernet dimulai');
                 break;
             case 'cancel_libernet':
                 exec('export LIBERNET_DIR="'.$libernet_dir.'" && '.$libernet_dir.'/bin/service.sh -cl');
-                json_response('Libernet service canceled');
+                json_response('Layanan Libernet di batalkan');
                 break;
             case 'stop_libernet':
                 exec('export LIBERNET_DIR="'.$libernet_dir.'" && '.$libernet_dir.'/bin/service.sh -ds');
-                json_response('Libernet service stopped');
+                json_response('Layanan Libernet dihentikan');
                 break;
             case 'get_dashboard_info':
                 $status = file_get_contents($libernet_dir.'/log/status.log');
@@ -209,7 +209,7 @@
                                     $vmess_config->outbounds[0]->settings->vnext[0]->users[0]->security = $vmess_security;
                                     set_v2ray_config($vmess_config, $protocol, $network, $security, $sni, $path, $ip, $udpgw_ip, $udpgw_port);
                                     file_put_contents($libernet_dir.'/bin/config/v2ray/'.$profile.'.json', json_encode($vmess_config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-                                    json_response('V2Ray vmess config saved');
+                                    json_response('Config V2Ray vmess disimpan');
                                     break;
                                 // vless
                                 case "vless":
@@ -221,7 +221,7 @@
                                     $vless_config->outbounds[0]->settings->vnext[0]->users[0]->id = $vless_id;
                                     set_v2ray_config($vless_config, $protocol, $network, $security, $sni, $path, $ip, $udpgw_ip, $udpgw_port);
                                     file_put_contents($libernet_dir.'/bin/config/v2ray/'.$profile.'.json', json_encode($vless_config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-                                    json_response('V2Ray vless config saved');
+                                    json_response('Config V2Ray vless disimpan');
                                     break;
                                 // trojan
                                 case "trojan":
@@ -233,14 +233,14 @@
                                     $trojan_config->outbounds[0]->settings->servers[0]->password = $trojan_password;
                                     set_v2ray_config($trojan_config, $protocol, $network, $security, $sni, $path, $ip, $udpgw_ip, $udpgw_port);
                                     file_put_contents($libernet_dir.'/bin/config/v2ray/'.$profile.'.json', json_encode($trojan_config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-                                    json_response('V2Ray trojan config saved');
+                                    json_response('Config V2Ray trojan disimpan');
                                     break;
                             }
                             break;
                         // ssh-ssl
                         case 2:
                             file_put_contents($libernet_dir.'/bin/config/ssh_ssl/'.$profile.'.json', json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-                            json_response('SSH-SSL config saved');
+                            json_response('Config SSH-SSL disimpan');
                             break;
                         // trojan
                         case 3:
@@ -254,7 +254,7 @@
                             $trojan_config->etc->udpgw->ip = $config['udpgw']['ip'];
                             $trojan_config->etc->udpgw->port = $config['udpgw']['port'];
                             file_put_contents($libernet_dir.'/bin/config/trojan/'.$profile.'.json', json_encode($trojan_config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-                            json_response('Trojan config saved');
+                            json_response('Config Trojan disimpan');
                             break;
                         // shadowsocks
                         case 4:
@@ -292,12 +292,12 @@
                             $shadowsocks_config->etc->udpgw->ip = $config['udpgw']['ip'];
                             $shadowsocks_config->etc->udpgw->port = $config['udpgw']['port'];
                             file_put_contents($libernet_dir.'/bin/config/shadowsocks/'.$profile.'.json', json_encode($shadowsocks_config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-                            json_response('Shadowsocks config saved');
+                            json_response('Config Shadowsocks disimpan');
                             break;
                         // openvpn
                         case 5:
                             file_put_contents($libernet_dir.'/bin/config/openvpn/'.$profile.'.json', json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-                            json_response('OpenVPN config saved');
+                            json_response('Config OpenVPN disimpan');
                             break;
                     }
                 }
@@ -375,7 +375,7 @@
                     $system_config->tunnel->ping_loop = $ping_loop;
                     $system_config = json_encode($system_config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
                     file_put_contents($libernet_dir.'/system/config.json', $system_config);
-                    json_response('Configuration applied');
+                    json_response('Konfigurasi diterapkan');
                 }
                 break;
             case 'delete_config':
@@ -386,27 +386,27 @@
                     switch ($mode) {
                         case 0:
                             unlink($libernet_dir.'/bin/config/ssh/'.$profile.'.json');
-                            json_response('SSH config removed');
+                            json_response('Config SSH dihapus');
                             break;
                         case 1:
                             unlink($libernet_dir.'/bin/config/v2ray/'.$profile.'.json');
-                            json_response('V2Ray config removed');
+                            json_response('Config V2Ray dihapus');
                             break;
                         case 2:
                             unlink($libernet_dir.'/bin/config/ssh_ssl/'.$profile.'.json');
-                            json_response('SSH-SSL config removed');
+                            json_response('Config SSH-SSL dihapus');
                             break;
                         case 3:
                             unlink($libernet_dir.'/bin/config/trojan/'.$profile.'.json');
-                            json_response('Trojan config removed');
+                            json_response('Config Trojan dihapus');
                             break;
                         case 4:
                             unlink($libernet_dir.'/bin/config/shadowsocks/'.$profile.'.json');
-                            json_response('Shadowsocks config removed');
+                            json_response('Config Shadowsocks dihapus');
                             break;
                         case 5:
                             unlink($libernet_dir.'/bin/config/openvpn/'.$profile.'.json');
-                            json_response('OpenVPN config removed');
+                            json_response('Config OpenVPN dihapus');
                             break;
                     }
                 }
@@ -415,9 +415,9 @@
                 $status = $json['status'];
                 set_auto_start($status);
                 if ($status) {
-                    json_response("Libernet service auto start enabled");
+                    json_response("Layanan Libernet mulai otomatis diaktifkan");
                 } else {
-                    json_response("Libernet service auto start disabled");
+                    json_response("Layanan Libernet mulai otomatis dimatikan");
                 }
                 break;
             case 'check_update':
@@ -429,7 +429,7 @@
                 $retval = null;
                 exec('export LIBERNET_DIR="'.$libernet_dir.'" && '.$libernet_dir.'/update.sh -web > /dev/null 2>&1 &', $output, $retval);
                 if (!$retval) {
-                    json_response('Libernet updated!');
+                    json_response('Libernet diperbarui!');
                 }
                 break;
             case 'resolve_host':
@@ -448,7 +448,7 @@
                 $system_config->system->password = $password;
                 $system_config = json_encode($system_config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
                 file_put_contents($libernet_dir.'/system/config.json', $system_config);
-                json_response("Password changed");
+                json_response("Password diubah");
                 break;
         }
     }

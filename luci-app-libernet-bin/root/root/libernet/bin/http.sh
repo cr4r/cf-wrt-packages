@@ -5,7 +5,7 @@
 # v1.0
 
 if [ "$(id -u)" != "0" ]; then
-  echo "This script must be run as root" 1>&2
+  echo "Script ini harus user root!" 1>&2
   exit 1
 fi
 
@@ -17,19 +17,19 @@ LISTEN_PORT="$(grep 'port":' ${SSH_CONFIG} | awk '{print $2}' | sed 's/,//g; s/"
 
 function run() {
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "Starting ${SERVICE_NAME} service"
-  echo -e "Starting ${SERVICE_NAME} service ..."
+  "${LIBERNET_DIR}/bin/log.sh" -w "Memulai layanan ${SERVICE_NAME} ..."
+  echo -e "Memulai layanan ${SERVICE_NAME} ..."
   screen -AmdS http-proxy bash -c "while true; do python3 -u \"${LIBERNET_DIR}/bin/http.py\" \"${SSH_CONFIG}\" -l ${LISTEN_PORT}; sleep 3; done" \
-    && echo -e "${SERVICE_NAME} service started!"
+    && echo -e "layanan ${SERVICE_NAME} telah dimulai!"
 }
 
 function stop() {
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "Stopping ${SERVICE_NAME} service"
-  echo -e "Stopping ${SERVICE_NAME} service ..."
+  "${LIBERNET_DIR}/bin/log.sh" -w "Menghentikan layanan ${SERVICE_NAME}"
+  echo -e "Menghentikan layanan ${SERVICE_NAME}"
   kill $(screen -list | grep http-proxy | awk -F '[.]' {'print $1'})
   killall python3
-  echo -e "${SERVICE_NAME} service stopped!"
+  echo -e "layanan ${SERVICE_NAME} telah berhenti!"
 }
 
 function usage() {

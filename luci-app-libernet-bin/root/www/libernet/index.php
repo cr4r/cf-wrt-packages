@@ -60,7 +60,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" v-model="config.system.tun2socks.legacy" :disabled="status === true" id="tun2socks-legacy">
                                         <label class="form-check-label" for="tun2socks-legacy">
-                                            Use tun2socks legacy
+                                            Gunakan tun2socks legacy
                                         </label>
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" v-model="config.system.tunnel.autostart" :disabled="status === true" id="autostart">
                                         <label class="form-check-label" for="autostart">
-                                            Auto start Libernet on boot
+                                            Mulai otomatis Libernet saat boot
                                         </label>
                                     </div>
                                 </div>

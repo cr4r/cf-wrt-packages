@@ -1,7 +1,7 @@
 #
-# LuCI Free VPN Site Lists by Helmi Amirudin <https://www.helmiau.com>
+# LuCI Free VPN Site Lists by CR4R <https://www.coders-family.me>
 #
-# Copyright (C) 2021 Helmi Amirudin <helmilaw@gmail.com>
+# Copyright (C) 2021 CR4R <cr4rrr@gmail.com>
 # This is free software, licensed under the Apache License, Version 2.0
 #
 

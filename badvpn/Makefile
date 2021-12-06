@@ -1,7 +1,7 @@
 # Copyright (C) 2009 Ambroz Bizjak
 #
 # This is free software, licensed under the GNU General Public License v2.
-# Updated & patched for OpenWrt by Helmi Amirudin <www.helmiau.com>
+# Updated & patched for OpenWrt by CR4R <www.coders-family.me>
 #
 
 include $(TOPDIR)/rules.mk
@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=badvpn
 PKG_VERSION:=1.999.130
 PKG_RELEASE:=1
-PKG_MAINTAINER:=helmiau
+PKG_MAINTAINER:=cr4r
 
 PKG_SOURCE:=$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://github.com/ambrop72/badvpn/archive/

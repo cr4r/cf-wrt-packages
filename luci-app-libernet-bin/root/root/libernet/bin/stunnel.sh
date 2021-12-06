@@ -5,7 +5,7 @@
 # v1.0
 
 if [ "$(id -u)" != "0" ]; then
-  echo "This script must be run as root" 1>&2
+  echo "Script ini harus user root!" 1>&2
   exit 1
 fi
 
@@ -35,20 +35,20 @@ function configure() {
 
 function run() {
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "Starting ${SERVICE_NAME} service"
-  echo -e "Starting ${SERVICE_NAME} service ..."
+  "${LIBERNET_DIR}/bin/log.sh" -w "Memulai layanan ${SERVICE_NAME}"
+  echo -e "Memulai layanan ${SERVICE_NAME}"
   configure "${1}" "${2}" "${3}" "${4}" "${5}" \
     && screen -AmdS stunnel bash -c "while true; do stunnel \"${STUNNEL_CONFIG}\"; sleep 3; done" \
-    && echo -e "${SERVICE_NAME} service started!"
+    && echo -e "Layanan ${SERVICE_NAME} dimulai!"
 }
 
 function stop() {
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "Stopping ${SERVICE_NAME} service"
-  echo -e "Stopping ${SERVICE_NAME} service ..."
+  "${LIBERNET_DIR}/bin/log.sh" -w "Menghentikan layanan ${SERVICE_NAME}"
+  echo -e "Menghentikan layanan ${SERVICE_NAME}"
   kill $(screen -list | grep stunnel | awk -F '[.]' {'print $1'})
   killall stunnel
-  echo -e "${SERVICE_NAME} service stopped!"
+  echo -e "Layanan ${SERVICE_NAME} dihentikan!"
 }
 
 function usage() {

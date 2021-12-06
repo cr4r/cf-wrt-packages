@@ -5,7 +5,7 @@
 # v1.0
 
 if [ "$(id -u)" != "0" ]; then
-  echo "This script must be run as root" 1>&2
+  echo "Script ini harus user root!" 1>&2
   exit 1
 fi
 
@@ -86,15 +86,15 @@ function run() {
     "${LIBERNET_DIR}/bin/stunnel.sh" -r "openvpn" "${OPENVPN_PROFILE}" "${OPENVPN_HOST}" "${OPENVPN_PORT}" "${OPENVPN_SNI}"
   fi
   "${LIBERNET_DIR}/bin/log.sh" -w "Starting ${SERVICE_NAME} service"
-  echo -e "Starting ${SERVICE_NAME} service ..."
+  echo -e "Memulai layanan ${SERVICE_NAME} ..."
   screen -AmdS openvpn bash -c "while true; do openvpn \"${OPENVPN_CFG}\" > \"${LIBERNET_DIR}/log/openvpn.log\"; sleep 3; done" \
-    && echo -e "${SERVICE_NAME} service started!"
+    && echo -e "Memulai layanan ${SERVICE_NAME}!"
 }
 
 function stop() {
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "Stopping ${SERVICE_NAME} service"
-  echo -e "Stopping ${SERVICE_NAME} service ..."
+  "${LIBERNET_DIR}/bin/log.sh" -w "Menghentikan layanan ${SERVICE_NAME}"
+  echo -e "Menghentikan layanan ${SERVICE_NAME}"
   kill $(screen -list | grep openvpn | awk -F '[.]' {'print $1'})
   killall openvpn
   if [[ "${ENABLE_SSL}" == 'true' ]]; then
@@ -103,7 +103,7 @@ function stop() {
   # remove openvpn log file
   rm "${LIBERNET_DIR}/log/openvpn.log"
   route -d
-  echo -e "${SERVICE_NAME} service stopped!"
+  echo -e "Layanan ${SERVICE_NAME} berhenti"
 }
 
 function usage() {

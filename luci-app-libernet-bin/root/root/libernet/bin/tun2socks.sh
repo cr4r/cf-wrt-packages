@@ -5,7 +5,7 @@
 # v1.0
 
 if [ "$(id -u)" != "0" ]; then
-  echo "This script must be run as root" 1>&2
+  echo "Script ini harus user root!" 1>&2
   exit 1
 fi
 
@@ -31,7 +31,7 @@ DEFAULT_ROUTE="$(ip route show | grep default)"
 
 function init_tun_dev {
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "Tun2socks: initializing tun device"
+  "${LIBERNET_DIR}/bin/log.sh" -w "Tun2socks: Menganalisa perangkantun"
   # remove tun dev if already exist
   if ifconfig "${TUN_DEV}" > /dev/null 2>&1; then
     ifconfig ${TUN_DEV} down
@@ -45,34 +45,34 @@ function init_tun_dev {
 
 function destroy_tun_dev {
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "Tun2socks: removing tun device"
+  "${LIBERNET_DIR}/bin/log.sh" -w "Tun2socks: Menghapus tun device"
   ifconfig ${TUN_DEV} down
   ip tuntap del dev ${TUN_DEV} mode tun
-  echo -e "Tun device removed!"
+  echo -e "Perangkat Tun dihapus!"
 }
 
 function start_tun2socks {
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "Starting tun2socks service"
+  "${LIBERNET_DIR}/bin/log.sh" -w "Memulai layanan tun2socks"
   ifconfig ${TUN_DEV} ${TUN_GATEWAY} netmask ${TUN_NETMASK} up
   if [[ $TUN2SOCKS_MODE == "false" ]]; then
     screen -AmdS go-tun2socks go-tun2socks -loglevel none -proxyServer "${SOCKS_SERVER}" -proxyType socks -tunName "${TUN_DEV}" -tunAddr "${TUN_ADDRESS}" -tunGw "${TUN_GATEWAY}" -tunMask "${TUN_NETMASK}"
   else
     screen -AmdS badvpn-tun2socks badvpn-tun2socks --loglevel 0 --tundev ${TUN_DEV} --netif-ipaddr ${TUN_ADDRESS} --netif-netmask ${TUN_NETMASK} --socks-server-addr ${SOCKS_SERVER} --udpgw-remote-server-addr "${UDPGW}"
   fi
-  # removing default route
+  # menghapus default route
   echo ${DEFAULT_ROUTE} > ${ROUTE_LOG} \
     && ip route del ${DEFAULT_ROUTE}
   # add default route to tun2socks
   ip route add default via ${TUN_ADDRESS} metric 6
-  echo -e "Tun2socks started!"
+  echo -e "Tun2socks dimulai!"
   # write connected time
   "${LIBERNET_DIR}/bin/log.sh" -c "$(date +"%s")"
 }
 
 function stop_tun2socks {
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "Stopping tun2socks service"
+  "${LIBERNET_DIR}/bin/log.sh" -w "Menghentikan tun2socks service"
   if [[ $TUN2SOCKS_MODE == "false" ]]; then
     kill $(screen -list | grep go-tun2socks | awk -F '[.]' {'print $1'})
   else
@@ -101,7 +101,7 @@ function route_add_ip {
 
 function route_del_ip {
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "Tun2socks: removing routes"
+  "${LIBERNET_DIR}/bin/log.sh" -w "Tun2socks: Menghapus routes"
   for IP in "${DNS_IPS[@]}"; do
     ip route del ${IP} &
   done
@@ -109,18 +109,18 @@ function route_del_ip {
     ip route del ${IP} &
   done
   ip route del ${SERVER_IP} &
-  echo -e "Routes removed!"
+  echo -e "Menghapus Routes!"
 }
 
 function usage() {
   cat <<EOF
 Usage:
-  -i  Initialize tun device
-  -d  Destroy tun device
+  -i  Inisialisasi perangkat tun
+  -d  Menghentikan perangkat tun
   -y  Route server, proxy & dns
-  -z  Remove route server, proxy & dns
-  -r  Run tun2socks
-  -s  Stop tun2socks
+  -z  Menghapus route server, proxy & dns
+  -r  Memulai tun2socks
+  -s  Menghentikan tun2socks
 EOF
 }
 
@@ -133,11 +133,11 @@ case "${1}" in
     ;;
   -w)
     # stop tun2socks service
-    echo -e "Stopping Tun2socks service ..."
+    echo -e "Menghentikan Layanan Tun2socks ..."
     stop_tun2socks
-    echo -e "Removing routes ..."
+    echo -e "Menghapus routes ..."
     route_del_ip
-    echo -e "Removing tun device ..."
+    echo -e "Menghapus tun device ..."
     destroy_tun_dev
     ;;
   -i)

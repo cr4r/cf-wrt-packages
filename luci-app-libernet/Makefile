@@ -1,8 +1,8 @@
 #
 # Libernet Software made by Lutfa Ibtihaji Ilham <https://github.com/lutfailham96/libernet>
-# LuCI Libernet App by Helmi Amirudin <https://www.helmiau.com>
+# LuCI Libernet App by CR4R <https://www.coders-family.me>
 #
-# Copyright (C) 2021 Helmi Amirudin <https://www.helmiau.com>
+# Copyright (C) 2021 CR4R <https://coders-family.me>
 # This is free software, licensed under the Apache License, Version 2.0
 #
 
@@ -44,18 +44,18 @@ define Package/$(PKG_NAME)/postinst
 	sed -i '3 i /usr/sbin/openvpn --mktun --dev tun1' /etc/rc.local
 	# Autofix download index.php, index.html
 	if ! grep -q ".php=/usr/bin/php-cgi" /etc/config/uhttpd; then
-		echo -e "  helmilog : system not using php-cgi, patching php config ..."
-		logger "  helmilog : system not using php-cgi, patching php config..."
+		echo -e "  cflog : system not using php-cgi, patching php config ..."
+		logger "  cflog : system not using php-cgi, patching php config..."
 		uci set uhttpd.main.ubus_prefix='/ubus'
 		uci set uhttpd.main.interpreter='.php=/usr/bin/php-cgi'
 		uci set uhttpd.main.index_page='cgi-bin/luci'
 		uci add_list uhttpd.main.index_page='index.html'
 		uci add_list uhttpd.main.index_page='index.php'
 		uci commit uhttpd
-		echo -e "  helmilog : patching system with php configuration done ..."
-		echo -e "  helmilog : restarting some apps ..."
-		logger "  helmilog : patching system with php configuration done..."
-		logger "  helmilog : restarting some apps..."
+		echo -e "  cflog : patching system with php configuration done ..."
+		echo -e "  cflog : restarting some apps ..."
+		logger "  cflog : patching system with php configuration done..."
+		logger "  cflog : restarting some apps..."
 		/etc/init.d/uhttpd restart
 	fi
 exit 0

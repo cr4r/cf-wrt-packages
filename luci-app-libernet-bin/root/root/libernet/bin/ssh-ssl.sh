@@ -5,7 +5,7 @@
 # v1.0
 
 if [ "$(id -u)" != "0" ]; then
-  echo "This script must be run as root" 1>&2
+  echo "Script ini harus user root!" 1>&2
   exit 1
 fi
 
@@ -32,12 +32,12 @@ function run() {
 
 function stop() {
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "Stopping ${SERVICE_NAME} service"
-  echo -e "Stopping ${SERVICE_NAME} service ..."
+  "${LIBERNET_DIR}/bin/log.sh" -w "Menghentikan layanan ${SERVICE_NAME}"
+  echo -e "Menghentikan layanan ${SERVICE_NAME}"
   # kill ssh-ssl background service
   kill $(screen -list | grep ssh-ssl-connector | awk -F '[.]' {'print $1'})
   "${LIBERNET_DIR}/bin/stunnel.sh" -s
-  echo -e "${SERVICE_NAME} service stopped!"
+  echo -e "Layanan ${SERVICE_NAME} dihentikan!"
 }
 
 function usage() {

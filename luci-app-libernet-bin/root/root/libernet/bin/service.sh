@@ -5,7 +5,7 @@
 # v1.0
 
 if [ "$(id -u)" != "0" ]; then
-  echo "This script must be run as root" 1>&2
+  echo "Script ini harus user root!" 1>&2
   exit 1
 fi
 
@@ -23,12 +23,12 @@ function check_connection() {
   while [[ "${counter}" -lt "${max_retries}" ]]; do
     sleep 5
     # write connection checking to service log
-    "${LIBERNET_DIR}/bin/log.sh" -w "Checking connection, attempt: $[${counter} + 1]"
-    echo -e "Checking connection, attempt: $[${counter} + 1]"
+    "${LIBERNET_DIR}/bin/log.sh" -w "Memeriksa koneksi, percobaan: $[${counter} + 1]"
+    echo -e "Memeriksa koneksi, percobaan: $[${counter} + 1]"
     if curl -so /dev/null -x "socks5://127.0.0.1:${DYNAMIC_PORT}" "http://bing.com"; then
       # write connection success to service log
-      "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: green\">Socks connection available</span>"
-      echo -e "Socks connection available!"
+      "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: green\">Koneksi socks tersedia</span>"
+      echo -e "Koneksi socks tersedia!"
       CONNECTED=true
       break
     fi
@@ -36,8 +36,8 @@ function check_connection() {
     # max retries reach
     if [[ "${counter}" -eq "${max_retries}" ]]; then
       # write not connectivity to service log
-      "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: red\">Socks connection unavailable</span>"
-      echo -e "Socks connection unavailable!"
+      "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: red\">Koneksi socks tidak tersedia</span>"
+      echo -e "Koneksi socks tidak tersedia!"
       # cancel Libernet service
       cancel_services
       exit 1
@@ -117,12 +117,12 @@ function openvpn_service() {
   while [[ "${counter}" -lt "${max_retries}" ]]; do
     sleep 5
     # write connection checking to service log
-    "${LIBERNET_DIR}/bin/log.sh" -w "Checking connection, attempt: $[${counter} + 1]"
-    echo -e "Checking connection, attempt: $[${counter} + 1]"
-    if grep -q 'Initialization Sequence Completed' "${LIBERNET_DIR}/log/openvpn.log"; then
+    "${LIBERNET_DIR}/bin/log.sh" -w "Memeriksa koneksi, percobaan: $[${counter} + 1]"
+    echo -e "Memeriksa koneksi, percobaan: $[${counter} + 1]"
+    if grep -q 'Urutan Inisialisasi Selesai' "${LIBERNET_DIR}/log/openvpn.log"; then
       # write connection success to service log
-      "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: green\">OpenVPN connection available</span>"
-      echo -e "OpenVPN connection available!"
+      "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: green\">Koneksi OpenVPN tersedia</span>"
+      echo -e "Koneksi OpenVPN tersedia!"
       # write connected time
       "${LIBERNET_DIR}/bin/log.sh" -c "$(date +"%s")"
       # save default route & change default route to tunnel
@@ -138,8 +138,8 @@ function openvpn_service() {
     # max retries reach
     if [[ "${counter}" -eq "${max_retries}" ]]; then
       # write not connectivity to service log
-      "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: red\">OpenVPN connection unavailable</span>"
-      echo -e "OpenVPN connection unavailable!"
+      "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: red\">Koneksi OpenVPN tidak tersedia</span>"
+      echo -e "Koneksi OpenVPN tidak tersedia!"
       # cancel Libernet service
       cancel_services
       exit 1
@@ -153,7 +153,7 @@ function start_services() {
   # write service status: running
   "${LIBERNET_DIR}/bin/log.sh" -s 1
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "Starting Libernet service"
+  "${LIBERNET_DIR}/bin/log.sh" -w "Memulai layanan Libernet"
   case "${TUNNEL_MODE}" in
     "0")
       ssh_service
@@ -177,15 +177,15 @@ function start_services() {
   # write service status: connected
   "${LIBERNET_DIR}/bin/log.sh" -s 2
   # write libernet to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: blue\">Libernet ready to used</span>"
-  echo -e "Libernet service started!"
+  "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: blue\">Libernet sudah siap digunakan</span>"
+  echo -e "Layanan Libernet dimulai!"
 }
 
 function stop_services() {
   # write service status: stopping
   "${LIBERNET_DIR}/bin/log.sh" -s 3
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "Stopping Libernet service"
+  "${LIBERNET_DIR}/bin/log.sh" -w "Menghentikan layanan Libernet"
   case "${TUNNEL_MODE}" in
     "0")
       "${LIBERNET_DIR}/bin/ssh.sh" -s
@@ -227,8 +227,8 @@ function stop_services() {
   # write service status: stop
   "${LIBERNET_DIR}/bin/log.sh" -s 0
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: gray\">Libernet service stopped</span>"
-  echo -e "Libernet services stopped!"
+  "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: gray\">Layanan Libernet dihentikan</span>"
+  echo -e "Layanan Libernet dihentikan!"
 }
 
 function cancel_services() {
@@ -246,23 +246,23 @@ function auto_start() {
       start_services
       break
     fi
-    echo -e "Waiting available connection, try again"
+    echo -e "Menunggu koneksi tersedia, coba lagi"
     sleep 3
   done
 }
 
 function enable_auto_start() {
   # force re-enable
-  echo -e "Enable Libernet auto start ..."
+  echo -e "Mengaktifkan mulai otomatis Libernet ..."
   sed -i "/service.sh -as/d" /etc/rc.local
   sed -i "s/exit 0/$(echo "export LIBERNET_DIR=\"${LIBERNET_DIR}\" \&\& screen -AmdS libernet ${LIBERNET_DIR}/bin/service.sh -as" | sed 's/\//\\\//g')\nexit 0/g" /etc/rc.local \
-    && echo -e "Libernet auto start enabled!"
+    && echo -e "Libernet mulai otomatis diaktifkan!"
 }
 
 function disable_auto_start() {
-  echo -e "Disable Libernet auto start ..."
+  echo -e "Mematikan mulai otomatis Libernet ..."
   sed -i "/service.sh -as/d" /etc/rc.local \
-    && echo -e "Libernet auto start disabled!"
+    && echo -e "Libernet mulai otomatis dimatikan!"
 }
 
 case "${1}" in

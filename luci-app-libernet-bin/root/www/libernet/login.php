@@ -32,13 +32,13 @@
             <div class="col-lg-6 col-md-12 mx-auto">
                 <div class="card mb-2">
                     <div class="card-header">
-                        <h3 class="text-center">Libernet</h3>
+                        <h3 class="text-center">Libernet | CR4R</h3>
                     </div>
                     <div class="card-body">
                         <form action="" method="post">
                             <?php
                                 if ($loginError) {
-                                    echo '<div class="alert alert-danger" role="alert">Invalid username & password combination!</div>';
+                                    echo '<div class="alert alert-danger" role="alert">username dan password salah!</div>';
                                 }
                             ?>
                             <div class="form-group">
@@ -58,7 +58,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-sign-in"></i> Login</button>
+                                <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-sign-in"></i> Masuk</button>
                             </div>
                         </form>
                     </div>

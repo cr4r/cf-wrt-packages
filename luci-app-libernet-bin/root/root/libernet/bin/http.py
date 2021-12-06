@@ -76,8 +76,8 @@ class Server:
             self.rx_chan[clientsock] = forward
             self.rx_chan[forward] = forward
         else:
-            print('\033[91mUnable connect to proxy server\033[0m')
-            logging.error('\033[91mUnable connect to proxy server\033[0m')
+            print('\033[91mTidak dapat terhubung ke server proxy\033[0m')
+            logging.error('\033[91mTidak dapat terhubung ke server proxy\033[0m')
             clientsock.close()
 
     def on_close(self):
@@ -118,8 +118,8 @@ class Server:
                     netdata = pay[0]
                 else:
                     netdata = payloads
-                print('\033[93mConnecting\033[0m')
-                logging.info('\033[93mConnecting\033[0m')
+                print('\033[93mMenghubungkan\033[0m')
+                logging.info('\033[93mMenghubungkan\033[0m')
             netdata = netdata.encode('ascii')
         except Exception as e:
             # print(e)
@@ -158,8 +158,8 @@ class Server:
         # print("Outbound netdata: {}".format(netdata))
 
         if 'zlib@openssh.com' in str(netdata):
-            print('\033[92mConnected!\033[0m')
-            logging.info('\033[92mConnected!\033[0m')
+            print('\033[92mTerhubung!\033[0m')
+            logging.info('\033[92mTerhubung!\033[0m')
 
         try:
             self.tx_chan[self.s].send(netdata)
@@ -186,8 +186,8 @@ class Server:
                     self.netdata = ''.encode('ascii')
 
                 if len(self.netdata) <= 0:
-                    print('\033[91mDisconnected!\033[0m')
-                    logging.info('\033[91mDisconnected!\033[0m')
+                    print('\033[91mTerputus!\033[0m')
+                    logging.info('\033[91mTerputus!\033[0m')
                     self.on_close()
                 else:
                     if self.tx_chan[self.s] != self.rx_chan[self.s]:

@@ -5,7 +5,7 @@
 # v1.0
 
 if [ "$(id -u)" != "0" ]; then
-  echo "This script must be run as root" 1>&2
+  echo "Script ini harus user root!" 1>&2
   exit 1
 fi
 
@@ -28,23 +28,23 @@ function run() {
   if [[ "${ENABLE_HTTP}" == 'true' ]]; then
     "${LIBERNET_DIR}/bin/http.sh" -r \
       && "${LIBERNET_DIR}/bin/log.sh" -w "Starting ${SERVICE_NAME} service" \
-      && echo -e "Starting ${SERVICE_NAME} service ..." \
+      && echo -e "Memulai Layanan ${SERVICE_NAME} ..." \
       && screen -AmdS ssh-connector "${LIBERNET_DIR}/bin/ssh-loop.sh" -e "${SSH_USER}" "${SSH_PASS}" "${SSH_HOST}" "${SSH_PORT}" "${DYNAMIC_PORT}" "${PROXY_IP}" "${PROXY_PORT}" \
-      && echo -e "${SERVICE_NAME} service started!"
+      && echo -e "Layanan ${SERVICE_NAME} dihentikan!"
   else
     # write to service log
-    "${LIBERNET_DIR}/bin/log.sh" -w "Starting ${SERVICE_NAME} service"
-    echo -e "Starting ${SERVICE_NAME} service ..."
+    "${LIBERNET_DIR}/bin/log.sh" -w "Memulai Layanan ${SERVICE_NAME} ..."
+    echo -e "Memulai Layanan ${SERVICE_NAME} ..."
     screen -AmdS ssh-connector "${LIBERNET_DIR}/bin/ssh-loop.sh" -d "${SSH_USER}" "${SSH_PASS}" "${SSH_HOST}" "${SSH_PORT}" "${DYNAMIC_PORT}"
   fi
 }
 
 function stop() {
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "Stopping ${SERVICE_NAME} service"
-  echo -e "Stopping ${SERVICE_NAME} service ..."
+  "${LIBERNET_DIR}/bin/log.sh" -w "Menghentikan layanan ${SERVICE_NAME}"
+  echo -e "Menghentikan layanan ${SERVICE_NAME}"
   kill $(screen -list | grep ssh-connector | awk -F '[.]' {'print $1'})
-  echo -e "${SERVICE_NAME} service stopped!"
+  echo -e "Layanan ${SERVICE_NAME} dihentikan!"
   if [[ "${ENABLE_HTTP}" == 'true' ]]; then
     "${LIBERNET_DIR}/bin/http.sh" -s
   fi

@@ -5,7 +5,7 @@
 # v1.0
 
 if [ "$(id -u)" != "0" ]; then
-  echo "This script must be run as root" 1>&2
+  echo "Script ini harus user root!" 1>&2
   exit 1
 fi
 
@@ -16,13 +16,13 @@ INTERVAL="1h"
 function clear_memory() {
   clear \
     && sync \
-    && echo -e "Memory usage before:" \
+    && echo -e "Sebelum memori digunakan:" \
     && free \
     && echo -e "" \
-    && echo -e "Performing clear memory ..." \
+    && echo -e "Membersihkan Memori ..." \
     && echo 3 > /proc/sys/vm/drop_caches \
-    && echo -e "Done!\n" \
-    && echo -e "Memory usage after:" \
+    && echo -e "Selesai!\n" \
+    && echo -e "Setelah memori digunakan:" \
     && free
 }
 
@@ -35,18 +35,18 @@ function loop() {
 
 function run() {
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "Starting ${SERVICE_NAME} service"
-  echo -e "Starting ${SERVICE_NAME} service ..."
+  "${LIBERNET_DIR}/bin/log.sh" -w "Memulai layanan ${SERVICE_NAME}"
+  echo -e "Memulai layanan ${SERVICE_NAME}"
   screen -AmdS memory-cleaner "${LIBERNET_DIR}/bin/memory-cleaner.sh" -l \
-    && echo -e "${SERVICE_NAME} service started!"
+    && echo -e "Layanan ${SERVICE_NAME} dimulai!"
 }
 
 function stop() {
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "Stopping ${SERVICE_NAME} service"
-  echo -e "Stopping ${SERVICE_NAME} service ..."
+  "${LIBERNET_DIR}/bin/log.sh" -w "Menghentikan layanan ${SERVICE_NAME}"
+  echo -e "Menghentikan layanan ${SERVICE_NAME} ..."
   kill $(screen -list | grep memory-cleaner | awk -F '[.]' {'print $1'})
-  echo -e "${SERVICE_NAME} service stopped!"
+  echo -e "Layanan ${SERVICE_NAME} berhenti!"
 }
 
 function usage() {

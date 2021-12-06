@@ -13,7 +13,7 @@
                 <a class="nav-link" href="index.php"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item <?php if ($url === 'config.php') echo 'active'; ?>">
-                <a class="nav-link" href="config.php"><i class="fa fa-gears"></i> Configuration</a>
+                <a class="nav-link" href="config.php"><i class="fa fa-gears"></i> Konfigurasi</a>
             </li>
             <li class="nav-item <?php if ($url === 'system.php') echo 'active'; ?>">
                 <a class="nav-link" href="system.php"><i class="fa fa-user"></i> System</a>
@@ -22,7 +22,7 @@
                 <a class="nav-link" href="speedtest.php"><i class="fa fa-arrows-v"></i> SpeedTest</a>
             </li>
             <li class="nav-item <?php if ($url === 'about.php') echo 'active'; ?>">
-                <a class="nav-link" href="about.php"><i class="fa fa-info"></i> About</a>
+                <a class="nav-link" href="about.php"><i class="fa fa-info"></i> Tentang</a>
             </li>
         </ul>
         <form action="logout.php">
